@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SzakszervizDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="szerviz">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rendszam" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="marka" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tipus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="forgalomban" Type="datetime" Nullable="false" />
+          <Property Name="fk_szolgaltatas_id" Type="int" Nullable="false" />
+          <Property Name="felvetel" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="szolgaltatas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nev" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Szerviz_ToSzolgaltatas">
+          <End Role="szolgaltatas" Type="Self.szolgaltatas" Multiplicity="1" />
+          <End Role="szerviz" Type="Self.szerviz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="szolgaltatas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="szerviz">
+              <PropertyRef Name="fk_szolgaltatas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SzakszervizDBModelStoreContainer">
+          <EntitySet Name="szerviz" EntityType="Self.szerviz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="szolgaltatas" EntityType="Self.szolgaltatas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Szerviz_ToSzolgaltatas" Association="Self.FK_Szerviz_ToSzolgaltatas">
+            <End Role="szolgaltatas" EntitySet="szolgaltatas" />
+            <End Role="szerviz" EntitySet="szerviz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SzakszervizDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SzakszervizDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="szerviz" EntityType="SzakszervizDBModel.szerviz" />
+          <EntitySet Name="szolgaltatas" EntityType="SzakszervizDBModel.szolgaltatas" />
+          <AssociationSet Name="FK_Szerviz_ToSzolgaltatas" Association="SzakszervizDBModel.FK_Szerviz_ToSzolgaltatas">
+            <End Role="szolgaltatas" EntitySet="szolgaltatas" />
+            <End Role="szerviz" EntitySet="szerviz" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="szerviz">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rendszam" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="marka" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="forgalomban" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fk_szolgaltatas_id" Type="Int32" Nullable="false" />
+          <Property Name="felvetel" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="szolgaltatas" Relationship="SzakszervizDBModel.FK_Szerviz_ToSzolgaltatas" FromRole="szerviz" ToRole="szolgaltatas" />
+        </EntityType>
+        <EntityType Name="szolgaltatas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nev" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="szerviz" Relationship="SzakszervizDBModel.FK_Szerviz_ToSzolgaltatas" FromRole="szolgaltatas" ToRole="szerviz" />
+        </EntityType>
+        <Association Name="FK_Szerviz_ToSzolgaltatas">
+          <End Type="SzakszervizDBModel.szolgaltatas" Role="szolgaltatas" Multiplicity="1" />
+          <End Type="SzakszervizDBModel.szerviz" Role="szerviz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="szolgaltatas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="szerviz">
+              <PropertyRef Name="fk_szolgaltatas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SzakszervizDBModelStoreContainer" CdmEntityContainer="SzakszervizDBEntities">
+          <EntitySetMapping Name="szerviz">
+            <EntityTypeMapping TypeName="SzakszervizDBModel.szerviz">
+              <MappingFragment StoreEntitySet="szerviz">
+                <ScalarProperty Name="felvetel" ColumnName="felvetel" />
+                <ScalarProperty Name="fk_szolgaltatas_id" ColumnName="fk_szolgaltatas_id" />
+                <ScalarProperty Name="forgalomban" ColumnName="forgalomban" />
+                <ScalarProperty Name="tipus" ColumnName="tipus" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="rendszam" ColumnName="rendszam" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="szolgaltatas">
+            <EntityTypeMapping TypeName="SzakszervizDBModel.szolgaltatas">
+              <MappingFragment StoreEntitySet="szolgaltatas">
+                <ScalarProperty Name="nev" ColumnName="nev" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

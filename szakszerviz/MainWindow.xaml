@@ -1,0 +1,168 @@
+﻿<Window x:Class="szakszerviz.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:szakszerviz"
+        mc:Ignorable="d"
+        Title="Szakszerviz" Height="650" Width="1000" FontFamily="Roboto" Loaded="Window_Loaded">
+    <Grid Background="AliceBlue">
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Szakszerviz" Grid.Row="0" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="650"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <WrapPanel Grid.Row="0" Margin="20 0" HorizontalAlignment="right" VerticalAlignment="Center">
+                <Label FontWeight="Bold" Content="Keresés rendszám alapján:" Width="150"/>
+                <TextBox Width="250"
+                         FontWeight="Bold"
+                         MaxLength="7"
+                         x:Name="inp_kereses"
+                         />
+                <Button Content="Keresés"
+                        Width="100"
+                        x:Name="kereses_btn"
+                        Click="kereses_btn_Click"
+                        />
+                
+                <Button Content="Vissza!"
+                        Width="100"
+                        Margin="10 0 0 0"
+                        x:Name="vissza_btn"
+                        Click="vissza_btn_Click"/>
+            </WrapPanel>
+
+            <StackPanel Grid.Row="1" Margin="20">
+                <DataGrid Height="360"
+                          IsReadOnly="True"
+                          AutoGenerateColumns="False"
+                          MouseDoubleClick="dg_szerviz_MouseDoubleClick"
+                          x:Name="dg_szerviz">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Rendszám" Visibility="Hidden" Binding="{Binding Path=Id}"/>
+                        <DataGridTextColumn Header="Rendszám" Binding="{Binding Path=rendszam}"/>
+                        <DataGridTextColumn Header="Márka" Binding="{Binding Path=marka}"/>
+                        <DataGridTextColumn Header="Típus" Binding="{Binding Path=tipus}"/>
+                        <DataGridTextColumn Header="Forgalomban" Binding="{Binding Path=forgalomban}"/>
+                        <DataGridTextColumn Header="Szolgáltatás" Binding="{Binding Path=szolgaltatas.nev}"/>
+                        <DataGridTextColumn Header="Felvétel" Binding="{Binding Path=felvetel}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+
+            <WrapPanel Grid.Row="2" Margin="20 0" HorizontalAlignment="right" VerticalAlignment="top">
+                <Label Content="Adatok exportálása" FontWeight="Bold"/>
+                <RadioButton VerticalContentAlignment="Center"
+                             Margin="10 0"
+                             Content="Összes autó"
+                             IsChecked="True"
+                             x:Name="radio_osszes"/>
+                <RadioButton VerticalContentAlignment="Center"
+                             Margin="10 0 20 0"
+                             Content="Szolgáltatás alapján"
+                             x:Name="radio_valasztott"/>
+                <ComboBox Width="150"
+                          SelectedIndex="0"
+                          x:Name="inp_szolg_export"/>
+                <Button Content="Exportálás!"
+                        Width="100"
+                        Margin="10 0 0 0"
+                        x:Name="export_btn"
+                        Click="export_btn_Click"/>
+            </WrapPanel>
+
+            <Grid Grid.Column="1">
+                <Label Content="Adatok bevitele"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       FontSize="16"
+                       x:Name="input_label_text"/>
+
+            </Grid>
+
+
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="20">
+                <WrapPanel Margin="0 10">
+                    <Label Content="Rendszám" Width="80"/>
+                    <TextBox Width="200"
+                             MaxLength="7"
+                             x:Name="inp_rendszam"/>
+                </WrapPanel>
+                <WrapPanel Margin="0 10">
+                    <Label Content="Márka"  Width="80"/>
+                    <TextBox Width="200"
+                             MaxLength="50"
+                             x:Name="inp_marka"/>
+                </WrapPanel>
+                <WrapPanel Margin="0 10">
+                    <Label Content="Típus"  Width="80"/>
+                    <TextBox Width="200"
+                             MaxLength="50"
+                             x:Name="inp_tipus"/>
+                </WrapPanel>
+                <WrapPanel Margin="0 10">
+                    <Label Content="Forgalomban"  Width="80"/>
+                    <DatePicker Width="200" x:Name="inp_forg"/>
+                </WrapPanel>
+                <WrapPanel Margin="0 10">
+                    <Label Content="Szolgáltatás"  Width="80"/>
+                    <ComboBox Width="200"
+                              SelectedIndex="0"
+                              x:Name="inp_szolg"/>
+                </WrapPanel>
+
+                <StackPanel Margin="10,20,30,20">
+                    <Button Margin="0 5"
+                            Content="Adatok felvitele"
+                            IsEnabled="True"
+                            x:Name="save_btn"
+                            Click="save_btn_Click"/>
+                    
+                    <Button Margin="0 5"
+                            Content="Vissza az adatok bevitelére!"
+                            x:Name="reset_btn"
+                            Background="Orange"
+                            IsEnabled="False"
+                            Click="reset_btn_Click"/>
+                    
+                    <Button Margin="0 5"
+                            Content="Törlés"
+                            IsEnabled="False"
+                            x:Name="delete_btn"
+                            Background="red"
+                            Foreground="white"
+                            Click="delete_btn_Click"
+                            />
+
+                </StackPanel>
+
+            </StackPanel>
+
+
+
+        </Grid>
+
+
+
+    </Grid>
+</Window>
